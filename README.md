@@ -1,2 +1,12 @@
 # motion-vision
 Analyzes and identifies motion from videos
+
+I have a folder called "Final Project", which then contains the subfolders "hmdb51_sta" (the downloaded videos), "bb_file" (the downloaded bounding boxes), "scripts", which contains the script I wrote, and "action_images", which is where the resulting images created from the script will go.
+
+Running the script will create subfolders in "action_images", one for each action. Within those, it will create a folder for each video that has a corresponding bounding_box file that actually indicates that an action is being done in the video. That folder will contain jpgs (labeled "0.jpg", "1.jpg", etc...) that are the cut-out images using the bounding box information.
+
+I've written notes in the script that will be useful for understanding it, so I won't write those here. However, note that for converting avi to mp4, I had to use ffmpeg, which I had to download and install (https://ffmpeg.org/), so you may have to do this as well if you have a Mac (VideoReader doesn't work for avi files for Mac, and I'm not sure if it works for Windows).
+
+There are two problems with the output right now. One is that the bounding_boxes files sometimes contains information for multiple actions within one video. Right now, I'm just assimilating all of them into one action folder corresponding to that video. It should be easy enough to separate these if we wanted to, though, I just wasn't sure what approach we wanted to take. Every time you see a new action after not having seen one in the previous frame, create a new folder and then put that continuous action into that one folder. The only problem with this is that some actions in the bb_file are basically one frame, which I don't really think warrants an action.
+
+The other problem I'm seeing is that sometimes the bb_files just look wrong. Sometimes, the number of frames in the bb_file doesn't correspond to the number of frames in the video (use video.NumberOfFrames in Matlab to see the number of frames in the video), or the outputted images don't bound around the person/action being done. I'm not sure what the problem is here, because the video name and the bounding_box file name directly correspond. I also don't know how to fix this problem. When the number of frames in the bounding_box file is bigger than the number of frames in the video, I just ignore those lines. However, the other problem of the output not looking good is harder to fix. Would we have to manually go through the outputted images and check them, and delete the bad ones?
