@@ -40,6 +40,8 @@ else
   save(opts.imdbPath, '-struct', 'imdb') ;
 end
 
+imdb = imdb.new_imdb;
+
 net.meta.classes.name = arrayfun(@(x)sprintf('%d',x),1:10,'UniformOutput',false) ;
 
 % --------------------------------------------------------------------
@@ -53,7 +55,6 @@ end
 
 [net, info] = trainfn(net, imdb, getBatch(opts), ...
   'expDir', opts.expDir, ...
-  net.meta.trainOpts, ...
   opts.train, ...
   'val', find(imdb.images.set == 3)) ;
 
