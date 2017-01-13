@@ -1,27 +1,30 @@
-% Install and compile MatConvNet (needed once).
-untar('http://www.vlfeat.org/matconvnet/download/matconvnet-1.0-beta23.tar.gz') ;
-cd matconvnet-1.0-beta23
-run matlab/vl_compilenn ;
-
-% Download a pre-trained CNN from the web (needed once).
-urlwrite(...
-  'http://www.vlfeat.org/matconvnet/models/imagenet-vgg-f.mat',epo ...
-  'imagenet-vgg-f.mat') ;
-
-% Setup MatConvNet.
-run matlab/vl_setupnn ;
-
-% Load a model and upgrade it to MatConvNet current version.
-net = load('imagenet-vgg-f.mat') ;
-net = vl_simplenn_tidy(net) ;
+% % Install and compile MatConvNet (needed once).
+%run matlab/vl_compilenn ;
+% 
+% % Download a pre-trained CNN from the web (needed once).
+% urlwrite(...
+% 'http://www.vlfeat.org/matconvnet/models/imagenet-vgg-f.mat', ...
+% 'imagenet-vgg-f.mat') ;
+% % 
+% % % Setup MatConvNet.
+% run matlab/vl_setupnn ;
+% 
+% % Load a model and upgrade it to MatConvNet current version.
+% net = load('imagenet-vgg-f.mat') ;
+% net = vl_simplenn_tidy(net) ;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Obtain and preprocess an image.
 
-new_data = zeros(6, 6, 768, size(imdb.images.data,4), 'single');
-dataMean = zeros(6, 6, 768, 'single');
+new_data = zeros(7, 7, 768, size(imdb.images.data,4), 'single');
+dataMean = zeros(7, 7, 768, 'single');
+
+
 
 for img_folders = 1: size(imdb.images.data,4)
+    
+    size(imdb.images.data)
+    img_folders
     
     im_ = imdb.images.data(:,:,:,img_folders,1);
     im_ = im_ - imdb.meta.dataMean ;
@@ -65,9 +68,9 @@ save new_imdb.mat new_imdb -v7.3
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Show the classification result.
-scores = squeeze(gather(res(end).x)) ;
-[bestScore, best] = max(scores) ;
-figure(1) ; clf ; imagesc(im) ;
-title(sprintf('%s (%d), score %.3f',...
-   net.meta.classes.description{best}, best, bestScore)) ;
+% % Show the classification result.
+% scores = squeeze(gather(res(end).x)) ;
+% [bestScore, best] = max(scores) ;
+% figure(1) ; clf ; imagesc(im) ;
+% title(sprintf('%s (%d), score %.3f',...
+%    net.meta.classes.description{best}, best, bestScore)) ;

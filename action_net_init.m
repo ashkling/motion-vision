@@ -1,5 +1,6 @@
 function net = action_net_init(varargin)
 
+opts.batchNormalization = true;
 opts.networkType = 'simplenn' ;
 opts = vl_argparse(opts, varargin) ;
 
@@ -11,10 +12,10 @@ lr = [.3 6] ;
 net.layers = {} ;
 
 % Block 1
-%Creates new layers that takes into account the multiple CNNs funneling into
+%Creates new lacccccyers that takes into account the multiple CNNs funneling into
 %the new portion
 net.layers{end+1} = struct('type', 'conv', ...
-                           'weights', {{0.01*randn(6,6,768,4096, 'single'), zeros(1, 4096, 'single')}}, ...
+                           'weights', {{0.01*randn(7,7,768,4096, 'single'), zeros(1, 4096, 'single')}}, ...
                            'learningRate', 0.3, ...
                            'stride', 1, ...
                            'pad', 2) ;
@@ -78,4 +79,3 @@ net = vl_simplenn_tidy(net) ;
 %   otherwise
 %     assert(false) ;
 end
-
